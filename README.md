@@ -1,1 +1,1 @@
-# vue-page-packaging
+# Vue 3 + TypeScript + Vite
