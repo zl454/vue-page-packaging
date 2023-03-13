@@ -5,22 +5,24 @@
         <span class="page-name__label">页面名称： </span
         ><a-input
           class="page-name__input"
-          v-model.trim="pageName"
+          v-model:value.trim="pageName"
           placeholder="请输入页面名称"
         ></a-input>
       </div>
     </div>
     <div :span="4" class="right">
-      <a-button class="btn">返回列表</a-button>
-      <a-button class="btn" type="primary">保存</a-button>
+      <a-button class="btn" @click="toList">返回列表</a-button>
+      <a-button class="btn" type="primary" @click="savePage">保存</a-button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const pageName = ref("");
-const toList = () => {};
-const savePage = () => {};
+const pageName = ref('')
+const toList = () => {}
+const savePage = () => {
+  console.log(pageName.value)
+}
 </script>
 
 <style lang="scss" scoped>
@@ -36,6 +38,7 @@ const savePage = () => {};
   z-index: 3;
   display: flex;
   justify-content: flex-end;
+
   .middle {
     display: flex;
     justify-content: center;
@@ -43,6 +46,7 @@ const savePage = () => {};
     color: #3f4245;
     font-size: 18px;
     font-weight: 600;
+
     .page-name__label {
       font-size: 15px;
       font-weight: bold;
@@ -50,10 +54,12 @@ const savePage = () => {};
       color: #29ba9c;
       white-space: nowrap;
     }
+
     .page-name__input {
       width: 300px;
     }
   }
+
   .right {
     display: flex;
     flex-flow: row nowrap;
@@ -61,6 +67,7 @@ const savePage = () => {};
     line-height: 50px;
     align-items: center;
     margin-left: 30px;
+
     .btn {
       width: 96px;
       height: 100%;
