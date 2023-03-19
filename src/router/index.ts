@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
   { path: '/', redirect: '/design', },
-  { path: '/design', meta: { name: '装修页' }, component: () => import('../views/design/Index.vue') },
+  { path: '/design', meta: { name: '装修页' }, component: () => import('../views/design/index.vue') },
   // { path: '*', redirect: '/404', hidden: true }
 ]
 

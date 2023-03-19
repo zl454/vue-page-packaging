@@ -7,7 +7,8 @@ import { resolve } from 'path'
 
 export default defineConfig({
     server: {
-        open: true
+        open: true,
+        port:8848
     },
     plugins: [
         vue(),
@@ -25,7 +26,8 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            '@': resolve(__dirname, './src')
+            '@': resolve(__dirname, './src'),
+            '@ant-design/icons-vue$': resolve('./src/assets/antd/icons.ts')
         }
     },
     css: {

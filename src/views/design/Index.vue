@@ -11,10 +11,10 @@
 </template>
 
 <script setup lang="ts">
-import LayoutTop from "./layout/Top.vue";
-import layoutComponentList from "./layout/Left.vue";
-import LayoutPreview from "./layout-preview/Index.vue";
-import LayoutSortable from "./layout/Right.vue";
+import LayoutTop from "./layout/top.vue";
+import layoutComponentList from "./layout/left.vue";
+import LayoutPreview from "./layout-preview/index.vue";
+import LayoutSortable from "./layout/right.vue";
 </script>
 
 <style lang="scss" scoped>
