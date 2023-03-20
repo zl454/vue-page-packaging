@@ -36,6 +36,7 @@
 
 <script setup lang="ts">
 import draggable from "vuedraggable";
+import { createUser } from "@/api";
 const categoryList = ref([
   {
     id: 1,
@@ -85,6 +86,25 @@ const handleSlide = (id: number) => {
   }
 };
 const createCloneComponent = () => {};
+// const getComponentsData = async () => {
+//   await getComponentsDataInterface().then((res) => {
+//     console.log(res);
+//   });
+// };
+onMounted(() => {
+  createUser().then((res) => {
+    console.log(res);
+  });
+});
+// onBeforeMount(async () => {
+//   // await getComponentsData();
+//   await info({
+//     path: "/jsBasicInfo",
+//     routeName: "routeName",
+//   }).then((res) => {
+//     console.log(res);
+//   });
+// });
 </script>
 
 <style lang="scss" scoped>
