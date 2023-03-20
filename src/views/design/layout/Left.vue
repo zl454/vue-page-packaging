@@ -37,6 +37,7 @@
 </template>
 
 <script setup lang="ts">
+import Vdc from "@/core/vdc/vdc";
 import draggable from "vuedraggable";
 import { getComponentsDataInterface, getTemplateListInterface } from "@/api";
 const categoryList = ref([
@@ -69,7 +70,31 @@ const handleSlide = (id: number) => {
     selectedCategorys.value.push(id);
   }
 };
-const createCloneComponent = () => {};
+/**
+ * 开始拖拽，复制拖拽对象
+ * @param {Object} dragData 拖拽对象数据
+ * @returns {Vdc} 返回复制的对象
+ */
+const createCloneComponent = (dragData) => {
+  // 创建组件实例
+  const vdc = new Vdc({
+    component_key: dragData.component_key,
+    component_title: dragData.component_title,
+    template_id: dragData.template_id,
+    template_name: dragData.template_name,
+    template_title: dragData.template_title,
+    template_list: dragData.template_list,
+  });
+  if (vdc.component_key == "L000001") {
+    vdc["tasks"] = [];
+  }
+  console.log(vdc);
+
+  return vdc;
+};
+/**
+ * 获取组件列表数据
+ */
 const getComponentsData = async () => {
   const componentList = await getComponentsDataInterface();
   const templateList = await getTemplateListInterface();
@@ -103,11 +128,6 @@ const getComponentsData = async () => {
   });
   console.log(categoryList.value);
 };
-// onMounted(() => {
-//   createUser().then((res) => {
-//     console.log(res);
-//   });
-// });
 onBeforeMount(async () => {
   await getComponentsData();
 });
@@ -129,6 +149,7 @@ onBeforeMount(async () => {
     width: 0;
   }
   .components-category {
+    user-select: none;
     h3 {
       position: relative;
       font-size: 14px;
