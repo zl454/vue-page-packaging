@@ -25,9 +25,11 @@
         :group="{ name: 'people', pull: 'clone', put: false }"
       >
         <!-- 子项 -->
-        <!-- <i :class="`iconfont ${components.icon}`"></i> -->
         <template #item="{ element }">
-          <div>{{ element.title }}</div>
+          <li>
+            <i :class="`iconfont ${element.icon}`"></i>
+            <div>{{ element.component_title }}</div>
+          </li>
         </template>
       </draggable>
     </div>
@@ -36,40 +38,22 @@
 
 <script setup lang="ts">
 import draggable from "vuedraggable";
-import { createUser } from "@/api";
+import { getComponentsDataInterface, getTemplateListInterface } from "@/api";
 const categoryList = ref([
   {
     id: 1,
     title: "基础组件",
-    components: [
-      {
-        id: 1,
-        title: 222,
-        icon: 333,
-      },
-    ],
+    components: [],
   },
   {
     id: 2,
     title: "店铺组件",
-    components: [
-      {
-        id: 1,
-        title: 222,
-        icon: 333,
-      },
-    ],
+    components: [],
   },
   {
     id: 3,
     title: "营销组件",
-    components: [
-      {
-        id: 1,
-        title: 222,
-        icon: 333,
-      },
-    ],
+    components: [],
   },
 ]);
 const selectedCategorys = ref([1, 2, 3]);
@@ -86,25 +70,47 @@ const handleSlide = (id: number) => {
   }
 };
 const createCloneComponent = () => {};
-// const getComponentsData = async () => {
-//   await getComponentsDataInterface().then((res) => {
-//     console.log(res);
-//   });
-// };
-onMounted(() => {
-  createUser().then((res) => {
-    console.log(res);
+const getComponentsData = async () => {
+  const componentList = await getComponentsDataInterface();
+  const templateList = await getTemplateListInterface();
+  const list = componentList.data.map((item) => {
+    // 提取必要的字段
+    const cmpt = {
+      id: item.id,
+      component_key: item.component_key,
+      component_title: item.name,
+      icon: item.icon || "",
+      template_id: Number(item.tpl_id) || 0,
+      templateList: templateList.data.filter(
+        (tmp) => tmp.component_key == item.component_key
+      ),
+      category_id: item.category_id,
+      is_store: item.is_store,
+    };
+    // 取第一个模版信息
+    if (cmpt.templateList.length > 0) {
+      cmpt.template_title = cmpt.templateList[0].name || "模版一";
+      cmpt.template_name = cmpt.templateList[0].name_en || "template1";
+    }
+    return cmpt;
   });
-});
-// onBeforeMount(async () => {
-//   // await getComponentsData();
-//   await info({
-//     path: "/jsBasicInfo",
-//     routeName: "routeName",
-//   }).then((res) => {
+  categoryList.value.map((cat) => {
+    list.map((x) => {
+      if (x.category_id == cat.id) {
+        cat.components.push(x);
+      }
+    });
+  });
+  console.log(categoryList.value);
+};
+// onMounted(() => {
+//   createUser().then((res) => {
 //     console.log(res);
 //   });
 // });
+onBeforeMount(async () => {
+  await getComponentsData();
+});
 </script>
 
 <style lang="scss" scoped>

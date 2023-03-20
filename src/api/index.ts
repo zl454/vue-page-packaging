@@ -50,3 +50,9 @@ export const info = (params: System.Info) => {
 export const createUser = () => {
   return request.get('/api/createUser', {})
 }
+export const getComponentsDataInterface = () => {
+  return request.get('/api/getComponentsData', {})
+}
+export const getTemplateListInterface = () => {
+  return request.get('/api/getTemplateList', {})
+}
